@@ -1,4 +1,9 @@
-# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files 3.12.10
+.env
+FrontEnd/static/uploads/
+.venv/
+BackEnd/db
+
 __pycache__/
 *.py[codz]
 *$py.class

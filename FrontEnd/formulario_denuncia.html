@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fazer Dencunia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="static/css/stilo_01.css" rel="stylesheet" >
+    <link href="static/css/forms.css" rel="stylesheet" >
+    <link href="static/css/alert.css" rel="stylesheet" >
+
+</head>
+
+<nav>
+    <div class="banner">
+        <img src="static/Assets/Logo.png" width="30%" alt="Logo">
+    </div>
+
+
+  <div class="topnav" id="myTopnav">
+    <a href="/">Inicio</a>
+    <a href="mapa_coleta">Mapa de Coleta</a>
+    <a href="fazer_denuncia"  class="active">Fazer Denuncia</a>
+    <a href="posts_educativos">Videos Educativos  </a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
+</nav>
+<body>
+
+<div class="container_center">
+
+    {% if sucesso == 1 %}
+
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <strong>Sucesso!</strong> Denúncia enviada!.
+    </div>
+    
+    {% endif %}
+    <div class="container_forms">
+        <h2>Fazer Denúncia</h2>
+        <form action="/fazer_denuncia" method="post" enctype="multipart/form-data">
+
+            <label for="local">Local da ocorrência</label>
+            <input type="text" id="local" name="local" placeholder="Endereço ou ponto de referência" required>
+
+            <label for="data">Data da ocorrência</label>
+            <input type="date" id="data" name="data">
+
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" rows="4" placeholder="Descreva o ocorrido..." required></textarea>
+
+
+            <label for="imagens">Anexar imagens (opcional)</label>
+            <input type="file" id="imagens" name="imagens" accept="image/*" multiple onchange="previewImagens()">
+            <button type="submit">Enviar Denúncia</button>
+            <div id="preview"></div>
+        </form>
+    </div>
+</div>
+
+    
+</body>
+
+<footer>
+  <p>© 2026 GreenUp. Todos os direitos reservados.</p>
+
+</footer>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
+
+
+
+<script>
+function previewImagens() {
+    const preview = document.getElementById('preview');
+    preview.innerHTML = "";
+    const files = document.getElementById('imagens').files;
+
+    for (let i = 0; i < files.length; i++) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.style.width = "100px";
+            img.style.margin = "5px";
+            preview.appendChild(img);
+        }
+
+        reader.readAsDataURL(files[i]);
+    }
+}
+</script>
+</html>

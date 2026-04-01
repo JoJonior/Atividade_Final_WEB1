@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN - POSTS</title>
+
+
+<link href="/static/css/stilo_01.css" rel="stylesheet">
+<link href="/static/css/denuncias_cards.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    .container {
+        padding: 20px;
+    }
+
+    .btn {
+        padding: 8px 14px;
+        margin: 5px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .btn-primary { background: #4CAF50; color: white; }
+    .btn-warning { background: orange; color: white; }
+    .btn-danger { background: #f44336; color: white; }
+
+    .card {
+        background: white;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+
+    .success { background: #4CAF50; color: white; }
+    .error { background: #f44336; color: white; }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        background:white;
+        padding:20px;
+        width:400px;
+        margin:100px auto;
+        border-radius:10px;
+    }
+
+    iframe {
+        width: 100%;
+        height: 200px;
+        margin-top: 10px;
+    }
+</style>
+
+
+</head>
+
+<body>
+
+<nav> 
+    <div class="topnav" id="myTopnav">  
+        <a href="/ADMIN/Posts" class="active">Posts</a>
+        <a href="/ADMIN/denuncias">Ver Denuncias</a>
+        <a href="/">Ir Para Site</a>
+        <a href="/logout">Logout</a>
+
+
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+    </a>
+</div>
+
+
+</nav>
+
+<div class="container">
+
+
+<h2>Gerenciar Posts</h2>
+
+<button class="btn btn-primary" onclick="abrirModal()">Novo Post</button>
+
+<div id="alertBox"></div>
+
+<div id="posts"></div>
+
+
+</div>
+
+<!-- MODAL -->
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalTitulo">Novo Post</h3>
+
+
+    <input type="text" id="titulo" placeholder="Título"><br><br>
+    <textarea id="conteudo" placeholder="Conteúdo"></textarea><br><br>
+    <input type="text" id="video_url" placeholder="YouTube Video ID"><br><br>
+
+    <button class="btn btn-primary" onclick="salvarPost()">Salvar</button>
+    <button class="btn" onclick="fecharModal()">Cancelar</button>
+</div>
+
+
+</div>
+
+<script>
+let editandoId = null;
+
+// ALERT
+function mostrarAlerta(msg, tipo="success"){
+    const box = document.getElementById("alertBox");
+    box.innerHTML = `<div class="alert ${tipo}">${msg}</div>`;
+    setTimeout(()=> box.innerHTML = "", 3000);
+}
+
+// MODAL
+function abrirModal(post=null){
+    document.getElementById("modal").style.display="block";
+
+    if(post){
+        editandoId = post.id;
+        titulo.value = post.titulo;
+        conteudo.value = post.conteudo;
+        video_url.value = post.video_url || "";
+        modalTitulo.innerText = "Editar Post";
+    }else{
+        editandoId = null;
+        titulo.value="";
+        conteudo.value="";
+        video_url.value="";
+        modalTitulo.innerText = "Novo Post";
+    }
+}
+
+function fecharModal(){
+    document.getElementById("modal").style.display="none";
+}
+
+// CRUD
+async function salvarPost(){
+    const formData = new FormData();
+    formData.append("titulo", titulo.value);
+    formData.append("conteudo", conteudo.value);
+    formData.append("video_url", video_url.value);
+
+    let url="/api/posts";
+    let method="POST";
+
+    if(editandoId){
+        url=`/api/posts/${editandoId}`;
+        method="PUT";
+    }
+
+    const res = await fetch(url,{method, body:formData});
+
+    if(res.ok){
+        mostrarAlerta("Post salvo com sucesso!");
+        fecharModal();
+        carregarPosts();
+    }else{
+        mostrarAlerta("Erro ao salvar", "error");
+    }
+}
+
+async function deletarPost(id){
+    if(!confirm("Deseja deletar este post?")) return;
+
+    const res = await fetch(`/api/posts/${id}`,{
+        method:"DELETE"
+    });
+
+    if(res.ok){
+        mostrarAlerta("Post deletado!");
+        carregarPosts();
+    }else{
+        mostrarAlerta("Erro ao deletar", "error");
+    }
+}
+
+// LISTAR
+async function carregarPosts(){
+    const res = await fetch("/api/posts");
+    const posts = await res.json();
+
+    const container = document.getElementById("posts");
+    container.innerHTML="";
+
+    posts.forEach(post=>{
+        const div = document.createElement("div");
+        div.className="card";
+
+        div.innerHTML=`
+            <h3>${post.titulo}</h3>
+            <p>${post.conteudo}</p>
+
+            ${post.video_url ? `<iframe src="https://www.youtube.com/embed/${post.video_url}" frameborder="0"></iframe>` : ""}
+
+            <button class="btn btn-warning" onclick='abrirModal(${JSON.stringify(post)})'>Editar</button>
+            <button class="btn btn-danger" onclick='deletarPost("${post.id}")'>Deletar</button>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+carregarPosts();
+
+// NAV
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>
+
+</body>
+</html>

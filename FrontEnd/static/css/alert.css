@@ -1,0 +1,58 @@
+.alert {
+    position: fixed;   /* 🔥 chave */
+    z-index: 9999;     /* 🔥 fica acima de tudo */
+    padding: 20px;
+    background-color: #04AA6D;
+    color: white;
+    margin-bottom: 15px;
+  
+    /* 🔥 animação */
+    animation: fadeOut 5s forwards;
+  }
+  
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+  }
+  
+  /* 🔹 animação */
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+    }
+  }
+
+.sucess {
+    background-color: #04AA6D;
+}
+.error {
+    background-color: red;
+}
+.warning {
+    background-color: orange;
+}
+
+
+.alert_error {
+  position: fixed;   /* 🔥 chave */
+  z-index: 9999;     /* 🔥 fica acima de tudo */
+  padding: 20px;
+  background-color: red;
+  color: white;
+  margin-bottom: 15px;
+
+  /* 🔥 animação */
+  animation: fadeOut 5s forwards;
+}

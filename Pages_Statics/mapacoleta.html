@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="static/css/stilo_01.css" rel="stylesheet" >
+        
+    <title>Mapa Coleta</title>
+</head>
+
+<nav>
+    <div class="banner">
+        <img src="static/Assets/Logo.png" width="30%" alt="Logo">
+    </div>
+
+
+  <div class="topnav" id="myTopnav">
+    <a href="index.html">Inicio</a>
+    <a class="active" href="mapacoleta.html">Mapa de Coleta </a>
+    <a href="formulario_denuncia.html">Fazer Denuncia</a>
+    <a href="posts_educativos.html">Videos Educativos  </a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
+</nav>
+<body>
+
+<div class="container_center">
+  <h1>Mapa da Rota de Coleta de Lixo</h1>
+
+    <h2>Mapa Estatico</h2>
+    <p>(Mapa de exemplo Municipio de ITAPEJARA D'OESTE)</p>
+    <img src="static/Assets/MAPA_IMAGEN.png" width="100%" >
+
+    <p>(Mapa de exemplo Municipio de Parauapebas)</p>
+    <h2>Mapa Interativo</h2>
+    <iframe class="mapa" src="https://map.geo360.com.br/parauapebas/3591" width="100%" height="400px"></iframe>
+  
+</div>
+
+    
+</body>
+
+<footer>
+  <p>© 2026 GreenUp. Todos os direitos reservados.</p>
+
+</footer>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
+</html>
