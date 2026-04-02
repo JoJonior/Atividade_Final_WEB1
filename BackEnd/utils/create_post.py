@@ -55,6 +55,11 @@ posts_data = [
         "conteudo": "Dicas práticas: proteja vidros quebrados em caixas, armazene óleo em garrafas PET e nunca descarte remédios no esgoto.",
         "video_url": "0hAGXUFg3Z4"
     }
+    ,{
+        "titulo": "Semana do Meio Ambiente Nova Ipixuna PA",
+        "conteudo": "Vídeo sobre Semana do Meio Ambiente Nova Ipixuna PA realizado pela SEMMAT.",
+        "video_url": "-R6gb8us0T8"
+    }
 ]
 
 # 4. Função para inserir os dados
