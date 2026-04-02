@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <link href="static/css/tables.css" rel="stylesheet" >
     <link href="static/css/stilo_01.css" rel="stylesheet" >
-        
+    
+
     <title>Mapa Coleta</title>
 </head>
 
 <nav>
     <div class="banner">
-        <img src="static/Assets/Logo.png" width="30%" alt="Logo">
+        <img src="static/Assets/Logo.png" width="15%" alt="Logo">
     </div>
 
 
@@ -26,18 +29,56 @@
   </div>
 
 </nav>
-<body>
+<body class="imgbg_03">
 
 <div class="container_center">
   <h1>Mapa da Rota de Coleta de Lixo</h1>
 
-    <h2>Mapa Estatico</h2>
-    <p>(Mapa de exemplo Municipio de ITAPEJARA D'OESTE)</p>
-    <img src="static/Assets/MAPA_IMAGEN.png" width="100%" >
+  <table>
+    <tr>
+      <th>ROTA</th>
+      <th>FREQUÊNCIA</th>
+        
+    </tr> 
+  
+    <tr>
+      <td>SETOR 01</td>
+      <td>Diária</td>
+    </tr>
+    <tr>
+
+      <td>SETOR 02</td>
+      <td>Segunda, Quarta e Sexta</td>
+    </tr>
+
+    <tr>
+      <td>SETOR 03</td>
+      <td>Terça, Quinta e Sábado</td>
+    </tr>
+    <tr>
+      <td>Barra Grande</td>
+      <td>Terça e Sexta</td>
+    </tr>
+      
+    <tr>
+      <td> Palmeirinha</td>
+      <td>TSegunda e Quinta</td>
+    </tr>
+    
+  </table>
+    <img src="static/Assets/MAPA_IMAGEN.png"  aria-describedby alt="Imagem da Rota de Coleta com Rota e Frequência:
+        SETOR 01, Diária;
+        SETOR 02, Segunda, Quarta e Sexta;
+        SETOR 03, Terça, Quinta e Sábado;
+        Barra Grande, Terça-Feira e Sexta-Feira;
+        Palmeirinha, Segunda e Quinta." width="100%" >
 
     <p>(Mapa de exemplo Municipio de Parauapebas)</p>
     <h2>Mapa Interativo</h2>
-    <iframe class="mapa" src="https://map.geo360.com.br/parauapebas/3591" width="100%" height="400px"></iframe>
+    <iframe class="mapa" src="https://map.geo360.com.br/parauapebas/3591" width="100%" height="400px" ></iframe>
+    <a href="https://www.topocart.com.br">Tcnologia do Mapa</a>
+
+
   
 </div>
 

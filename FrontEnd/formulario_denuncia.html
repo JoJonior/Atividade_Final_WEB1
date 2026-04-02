@@ -5,15 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fazer Dencunia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="static/css/stilo_01.css" rel="stylesheet" >
-    <link href="static/css/forms.css" rel="stylesheet" >
+    <link href="{{ url_for('static', path='/css/stilo_01.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', path='/css/forms.css') }}" rel="stylesheet">
+
     <link href="static/css/alert.css" rel="stylesheet" >
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <style>
+        #map { height: 300px; width: 100%; border-radius: 8px; margin-bottom: 15px; }
+        
+    </style>
 
 </head>
 
 <nav>
     <div class="banner">
-        <img src="static/Assets/Logo.png" width="30%" alt="Logo">
+        <img src="static/Assets/Logo.png" width="15%" alt="Logo">
     </div>
 
 
@@ -30,7 +44,7 @@
 </nav>
 <body>
 
-<div class="container_center">
+<div class="container_CENTRAL_DENUNCIA">
 
     {% if sucesso == 1 %}
 
@@ -52,7 +66,11 @@
 
             <label for="descricao">Descrição</label>
             <textarea id="descricao" name="descricao" rows="4" placeholder="Descreva o ocorrido..." required></textarea>
+            <label>Selecione o local no mapa:</label>
+            <div id="map"></div>
 
+            <input type="hidden" id="lat" name="latitude">
+            <input type="hidden" id="lng" name="longitude">
 
             <label for="imagens">Anexar imagens (opcional)</label>
             <input type="file" id="imagens" name="imagens" accept="image/*" multiple onchange="previewImagens()">
@@ -79,11 +97,40 @@ function myFunction() {
     x.className = "topnav";
   }
 }
+
+
+
+// Inicializa o mapa (focado em uma coordenada central da sua cidade)
+var map = L.map('map').setView([-4.9162051467865355 , -49.08051612365923], 15);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+}).addTo(map);
+
+var marker;
+
+map.on('click', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+
+    // Atualiza ou cria o marcador
+    if (marker) {
+        marker.setLatLng(e.latlng);
+    } else {
+        marker = L.marker(e.latlng).addTo(map);
+    }
+
+    // Salva nos inputs escondidos
+    document.getElementById('lat').value = lat;  // -4.9162051467865355  // lo -49.08051612365923
+    document.getElementById('lng').value = lng;
+    console.log("Coordenadas selecionadas: " + lat + ", " + lng);
+});
 </script>
 
 
 
 <script>
+ 
 function previewImagens() {
     const preview = document.getElementById('preview');
     preview.innerHTML = "";

@@ -11,11 +11,14 @@
 </head>
 <body>
     <nav> 
+    <div class="banner">
+        <img src="/static/Assets/LogoADM.png" width="15%" alt="Logo">
+    </div>
     <div class="topnav" id="myTopnav">  
         <a href="/ADMIN/Posts">Posts</a>
         <a href="/ADMIN/denuncias"  class="active">Ver Denuncias</a>
         <a href="/">Ir Para Site</a>
-        <a href="/logout">Loggout</a>
+        <a href="/loggout">Loggout</a>
         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
           <i class="fa fa-bars"></i>
         </a>
@@ -60,17 +63,52 @@
         
     
         div.innerHTML = `
-          <h3>${denuncia.descricao}</h3>
-          <p>${denuncia.localizacao}</p>
-          <div class="preview">
-            ${imagensHTML}
-          </div>
-          <p>${denuncia.data_ocorrencia}</p>
-        `;
+  <div class="card-header">
+    <span class="status-badge status-${denuncia.status.toLowerCase()}">${denuncia.status}</span>
+    <button class="btn-excluir" onclick="confirmarExclusao('${denuncia.id}')">
+      <i class="fa fa-trash"></i>
+    </button>
+  </div>
+  <h3>${denuncia.descricao}</h3>
+  <p><i class="fa fa-map-marker"></i> ${denuncia.localizacao}</p>
+  <div class="preview">
+    ${imagensHTML}
+  </div>
+  <div class="card-footer">
+    <span><i class="fa fa-calendar"></i> ${denuncia.data_ocorrencia}</span>
+    <select class="select-status" onchange="atualizarStatus('${denuncia.id}', this.value)">
+      <option value="Pendente" ${denuncia.status === 'Pendente' ? 'selected' : ''}>Pendente</option>
+      <option value="Em Analise" ${denuncia.status === 'Em Analise' ? 'selected' : ''}>Em Análise</option>
+      <option value="Resolvido" ${denuncia.status === 'Resolvido' ? 'selected' : ''}>Resolvido</option>
+    </select>
+  </div>
+`;
     
         container.appendChild(div);
       });
     }
+
+    async function confirmarExclusao(id) {
+    if (confirm("Deseja realmente excluir esta denúncia?")) {
+        const res = await fetch(`/api/denuncias/${id}`, { method: 'DELETE' });
+        const data = await res.json();
+        alert(data.msg);
+        carregarDenuncias(); // Recarrega a lista
+    }
+}
+
+async function atualizarStatus(id, novoStatus) {
+    // Você precisará criar essa rota no FastAPI
+    const res = await fetch(`/api/denuncias/${id}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: novoStatus })
+    });
+    if (res.ok) {
+        alert("Status atualizado!");
+        carregarDenuncias();
+    }
+}
     
     carregarDenuncias();
     </script>
@@ -80,7 +118,7 @@
       const modal = document.getElementById("modalImagem");
       const img = document.getElementById("imgGrande");
     
-      modal.style.display = "block";
+      modal.style.display = "flex";
       img.src = caminho;
     }
     

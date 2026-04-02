@@ -72,7 +72,8 @@ def get_denuncias(db):
                 "imagens": [    
                     {"caminho": img.caminho}
                     for img in d.imagens
-                ]
+                ],
+                "status": d.status
             })
 
         db.close()
@@ -80,6 +81,46 @@ def get_denuncias(db):
     except Exception as e:
         print("Erro ao listar denúncias:", e)
         return {"msg": "Erro ao listar denúncias!", "data": str(e)}
+
+def excluir_denuncia(db, id_denuncia):
+    try:
+        print("ID recebido:", id_denuncia)  # 👈 DEBUG
+        denuncia = db.query(Denuncia).filter(Denuncia.id == uuid.UUID(id_denuncia)).first()
+    
+        if not denuncia:
+            return {"msg": "Denuncia não encontrado!"}
+
+        db.delete(denuncia)
+        db.commit()
+        db.close()
+        return {"msg": "Denuncia excluído com sucesso!"}
+    except Exception as e:
+        print("Erro ao excluir post:", e)
+        return {"msg": "Erro ao excluir Denuncia!", "data": str(e)}
+
+
+def atualizar_denuncia(db, id_denuncia, status):
+    try:
+        print("ID recebido:", id_denuncia)  # 👈 DEBUG
+        denuncia = db.query(Post).filter(Post.id == uuid.UUID(id_denuncia)).first()
+    
+        if not denuncia:
+            return {"msg": "Denuncia não encontrado!"}
+
+        if not status:
+            return
+        
+        denuncia.status = status
+        db.commit()
+        db.refresh(denuncia)
+        return {"msg": "Status da Denuncia atualizada com sucesso!"}
+    except Exception as e:
+        print("Erro:", e)
+        return {"msg": "Erro", "data": str(e)}
+
+
+
+
 from datetime import datetime
 def criar_post(db, titulo, conteudo, video_url):
     try:

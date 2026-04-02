@@ -23,6 +23,7 @@ class Denuncia(Base):
     localizacao = Column(String)
     data_ocorrencia = Column(DateTime)
     imagens = relationship("Imagem", back_populates="denuncia")
+    status = Column(String, default="Pendente")  # Exemplo de campo para status da denúncia
 
 class Imagem(Base):
     __tablename__ = "imagens"

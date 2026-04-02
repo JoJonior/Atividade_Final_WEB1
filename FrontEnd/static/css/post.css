@@ -1,58 +1,78 @@
-.grid_posts{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-
-.post_card{
+.grid_posts {
+    display: grid;
+    /* auto-fit faz os cards esticarem para preencher a linha toda */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 20px;
+    padding: 20px;
+    margin: 0 auto;      /* Centraliza a grid inteira na página */
+}
+.post_card {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Organiza conteúdo em coluna */
+    background-color: #fff;
     padding: 16px;
     text-decoration: none;
     color: black;
-
-    /* 
-    border: 2px solid;
+    border: 4px solid #fff;
     border-radius: 8px;
-    border-color:rgb(79, 141, 79); 
-    */
-  
-
-}
-
-.post_card:hover{
-    background-color: #bbf3a4;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-}
-
-
-.post_card h3{
-    padding: 12px;
-    margin: 0;
-    text-align: center;
-
-}
-
-
-.post_card p{
-    padding: 12px;
-    margin: 0;
-
+    transition: all 0.3s ease;
+    min-width: 280px;
     
-
+    
+    
 }
 
-.post_card  img {
+.post_card:hover {
+   
+    border: 4px solid #88e95b;
+
+    transform: translateY(-5px); /* Efeito visual de levante */
+    box-shadow: 0 8px 15px rgba(1, 19, 11, 0.521);
+}
+
+.post_card img {
     width: 100%;
-  }
-  
+    height: 170px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.post_card h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.2rem;
+    /* Limita a 2 linhas */
+    white-space: normal; 
+    
+   
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Quantas linhas você quer? */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    
+    word-break: break-word; 
+}
+
+
+.post_card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+    /* Limita a 3 linhas */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Quantas linhas você quer? */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    
+    word-break: break-word; 
+}
 
 @media screen and (max-width: 800px) {
-    .grid_posts{
-        grid-template-columns: repeat(1, 1fr);
-        
+    .grid_posts {
+        grid-template-columns: 1fr;
     }
-
 }

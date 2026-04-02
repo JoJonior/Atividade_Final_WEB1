@@ -1,17 +1,19 @@
 from datetime import date
+import uuid
 from fastapi import FastAPI, File, Form, Request, UploadFile
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from fastapi import Depends
+from models import Denuncia
 from db import Base, engine,SessionLocal,get_db
 from sqlalchemy.orm import Session
 
 from starlette.middleware.sessions import SessionMiddleware
 
 
-from crud import criar_denuncia, criar_post, criar_usuario, editar_post, excluir_post, get_denuncias, autenticar_usuario, get_posts
+from crud import criar_denuncia, criar_post, criar_usuario, editar_post, excluir_denuncia, excluir_post, get_denuncias, autenticar_usuario, get_posts
 
 import uvicorn
 
@@ -109,6 +111,23 @@ def listar_denuncias(
     request=request,
     context={}
 )
+
+# Rota para Excluir
+@app.delete("/api/denuncias/{id_denuncia}")
+def api_excluir_denuncia(id_denuncia: str, db: Session = Depends(get_db)):
+    # Adicione verificação de login aqui também!
+    return excluir_denuncia(db, id_denuncia)
+
+# Rota para Atualizar Status (Importante para o fluxo)
+@app.patch("/api/denuncias/{id_denuncia}/status")
+def api_atualizar_status(id_denuncia: str, dados: dict, db: Session = Depends(get_db)):
+    denuncia = db.query(Denuncia).filter(Denuncia.id == uuid.UUID(id_denuncia)).first()
+    if not denuncia:
+        return {"msg": "Não encontrada"}, 404
+    
+    denuncia.status = dados.get("status")
+    db.commit()
+    return {"msg": "Status atualizado com sucesso!"}
 
 
 @app.get("/ADMIN/login")

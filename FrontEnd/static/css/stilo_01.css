@@ -1,24 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Inconsolata:wght@200..900&family=Maven+Pro:wght@400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-body {
-  margin: 0;
-  padding: 0;
+.imgbg_03{
+  width: 100%;
+  overflow-x: hidden;
   height: 100vh;
   display: grid;
   grid-template-rows: auto 1fr auto;
 
+  font-family: "Maven Pro", sans-serif;
+  font-optical-sizing: auto;
+ 
+  font-style: normal;
+  
+  background-image: url("/static/Assets/BG_03.png");
+
+
+
+
+  background-attachment: fixed;
+
+  background-position: center;
+
+
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  background-color: #f4f4f4;
+
+  min-height: 100vh;
+  margin: 0;
+
+}
+img {
+  border-radius: 15px; /* Quanto maior o número, mais redondo o canto */
+  object-fit: cover;   /* Importante para não distorcer a imagem */
 }
 
-.banner{
-    display: flex;
-    justify-self: center;
-    justify-content: center;
-    margin: auto;
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  font-family: "Maven Pro", sans-serif;
+  font-optical-sizing: auto;
+ 
+  font-style: normal;
+  
+
+  background-image: url("/static/Assets/background.png");
+
+
+
+  background-attachment: fixed;
+
+  background-position: center;
+
+
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  background-color: #f4f4f4;
+
+  min-height: 100vh;
+  margin: 0;
+
 }
 
+  .banner{
+      display: flex;
+      justify-self: center;
+      justify-content: center;
+      width: 100%;
+      background-color: #ffffff;
+      
+      align-items: center;
+  }
+
+  .banner img {
+    max-width: 250px;
+    width: 100%;     
+    height: auto;
+}
 .container_center {
 
   padding: 16px;
-  
   
   display: flex;
   flex-direction: column;
@@ -27,17 +98,46 @@ body {
   width: 50%;
   
 }
+.container_CENTRAL_DENUNCIA {
+    /* 1. Define a largura */
+    width: 90%;            /* Ocupa quase toda a tela em celulares */
+    max-width: 700px;      /* Tamanho confortável para leitura no PC */
+    
+    /* 2. Centralização */
+    margin: 40px auto;     /* 40px de espaço no topo/fundo e centraliza nas laterais */
+    
+    /* 3. Estética do Container */
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    
+    /* 4. Comportamento Interno */
+    box-sizing: border-box; /* Garante que o padding não aumente o tamanho total */
+}
 
-.container_center h1 {
+
+
+.container_center  h1 {
 
   font-weight: bold;
   font-size: 56px;
 
+  margin-bottom: 12px;
+
 }
+.container_center  h2 {
+
+
+  margin-bottom: 12px;
+
+}
+
+
 
 .container_center p {
   font-size: 26px;
-  
+  margin-bottom: 12px;
   
 }
 
@@ -96,6 +196,15 @@ body{
 @media screen and (max-width: 800px) {
   .container_center {
     width: 90%;
+  }
+  .container_CENTRAL_DENUNCIA{
+    padding: 16px;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    width: 50%;
   }
 }
 
