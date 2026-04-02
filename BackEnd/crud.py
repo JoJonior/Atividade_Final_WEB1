@@ -137,6 +137,8 @@ def criar_post(db, titulo, conteudo, video_url):
     except Exception as e:
         print("Erro ao criar post:", e)
         return {"msg": "Erro ao criar post!", "data": str(e)}
+    
+    
 def editar_post(db, id_post, novo_titulo, novo_conteudo, novo_video_url):
     try:
         post = db.query(Post).filter(Post.id == uuid.UUID(id_post)).first()

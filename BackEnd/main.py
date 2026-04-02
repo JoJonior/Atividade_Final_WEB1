@@ -4,7 +4,7 @@ from fastapi import FastAPI, File, Form, Request, UploadFile
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi import Depends
 from models import Denuncia
 from db import Base, engine,SessionLocal,get_db
@@ -20,8 +20,6 @@ import uvicorn
 app = FastAPI()
 
 
-
-
 templates = Jinja2Templates(directory="FrontEnd/")
 
 app.mount("/static", StaticFiles(directory="FrontEnd/static"), name="static")
@@ -33,6 +31,23 @@ app.add_middleware(
 )
 
 #region Routes
+
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request: Request, exc: StarletteHTTPException):
+    if exc.status_code == 404:
+        return templates.TemplateResponse(
+            request=request,      # Nomeie o argumento 'request' explicitamente
+            name="404.html",      # Nomeie o argumento 'name' explicitamente
+            status_code=404
+        )
+    
+    # Para outros erros, você pode apenas retornar a resposta padrão ou outra página
+    return templates.TemplateResponse(
+        request=request, 
+        name="erro_generico.html", # Certifique-se que esse arquivo existe ou use apenas uma string
+        context={"detalhe": str(exc.detail)},
+        status_code=exc.status_code
+    )
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
