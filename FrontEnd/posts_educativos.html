@@ -6,6 +6,8 @@
     <title>Video Educativos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="static/css/stilo_01.css" rel="stylesheet" >
+    <link href="static/css/modal_post.css" rel="stylesheet" >
+
     <link href="static/css/post.css" rel="stylesheet" >
 
     
@@ -58,6 +60,18 @@
 </div>
 
     
+<div id="modalPostEducativo" class="modal-educativo">
+  <div class="modal-educativo-content">
+      <span class="fechar-modal" onclick="fecharModalPost()">&times;</span>
+      <div id="videoContainer">
+          </div>
+      <div class="modal-info">
+          <h2 id="modalPostTitulo"></h2>
+          <p id="modalPostConteudo"></p>
+      </div>
+  </div>
+</div>
+
 </body>
 
 <footer>
@@ -78,33 +92,58 @@ function myFunction() {
 
 <script>
   // LISTAR
-  async function carregarPosts(){
-      const res = await fetch("/api/posts");
-      const posts = await res.json();
+  async function carregarPosts() {
+    const res = await fetch("/api/posts");
+    const posts = await res.json();
+    const container = document.getElementById("grid_posts");
+    container.innerHTML = "";
 
-      const container = document.getElementById("grid_posts");
-      container.innerHTML="";
+    posts.forEach(post => {
+        const div = document.createElement("div");
+        div.className = "card";
 
-      posts.forEach(post=>{
-          const div = document.createElement("div");
-          div.className="card";
-          
-          div.innerHTML=`
-         
-              <a href="https://www.youtube.com/embed/${post.video_url}"  class="post_card"> 
-              <h3>${post.titulo}</h3>
-              <img src="https://img.youtube.com/vi/${post.video_url}/hqdefault.jpg">
-              <p>${post.conteudo}</p>
-              
-              </a>
+        // Adicionamos o onclick e prevenimos o comportamento padrão do link
+        div.innerHTML = `
+            <a href="javascript:void(0)" class="post_card" onclick='abrirModalPost(${JSON.stringify(post)})'> 
+                <h3>${post.titulo}</h3>
+                <img src="https://img.youtube.com/vi/${post.video_url}/hqdefault.jpg">
+                <p>${post.conteudo}</p>
+            </a>
+        `;
+        container.appendChild(div);
+    });
+}
 
-          `;
+// Função para abrir o modal e preencher os dados
+function abrirModalPost(post) {
+    const modal = document.getElementById("modalPostEducativo");
+    const videoContainer = document.getElementById("videoContainer");
+    
+    document.getElementById("modalPostTitulo").innerText = post.titulo;
+    document.getElementById("modalPostConteudo").innerText = post.conteudo;
+    
+    // Inserimos o iframe dinamicamente (para o vídeo não carregar antes da hora)
+    videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${post.video_url}?autoplay=1" allowfullscreen allow="autoplay"></iframe>`;
+    
+    modal.style.display = "flex";
+}
 
+// Função para fechar e parar o vídeo
+function fecharModalPost() {
+    const modal = document.getElementById("modalPostEducativo");
+    const videoContainer = document.getElementById("videoContainer");
+    
+    modal.style.display = "none";
+    videoContainer.innerHTML = ""; // Remove o iframe para parar o som do vídeo
+}
 
-
-          container.appendChild(div);
-      });
-  }
+// Fechar se clicar fora do conteúdo branco
+window.onclick = function(event) {
+    const modal = document.getElementById("modalPostEducativo");
+    if (event.target == modal) {
+        fecharModalPost();
+    }
+}
 
   carregarPosts();
 

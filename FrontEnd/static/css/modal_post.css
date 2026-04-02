@@ -1,0 +1,78 @@
+/* Container Principal do Modal */
+.modal-educativo {
+    display: none; 
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px); /* Efeito de desfoque no fundo */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Conteúdo Interno */
+.modal-educativo-content {
+    background-color: #fff;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+    animation: abrirSuave 0.3s ease;
+}
+
+@keyframes abrirSuave {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Botão Fechar */
+.fechar-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    z-index: 10;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+/* Proporção 16:9 para o Vídeo */
+#videoContainer {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* Proporção de vídeo widescreen */
+    background: #000;
+}
+
+#videoContainer iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Informações do Post */
+.modal-info {
+    padding: 25px;
+}
+
+.modal-info h2 {
+    margin-top: 0;
+    color: #2ecc71; /* Cor GreenUp */
+}
+
+.modal-info p {
+    color: #555;
+    line-height: 1.6;
+    max-height: 200px;
+    overflow-y: auto;
+}

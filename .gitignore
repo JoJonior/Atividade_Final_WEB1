@@ -2,7 +2,7 @@
 .env
 FrontEnd/static/uploads/
 .venv/
-BackEnd/db
+
 
 __pycache__/
 *.py[codz]
