@@ -9,4 +9,6 @@
 * pip install -r "requirements.txt"
 # Execução:
 * Apenas executar arquivo: BackEnd/main.py
+# Slides:
+* [Clique aqui para ver o PDF](https://github.com/JoJonior/Atividade_Final_WEB1/blob/main/GreenUp%20Apresentacao.pdf)
   
