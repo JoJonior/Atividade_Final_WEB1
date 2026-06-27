@@ -2,9 +2,9 @@
 
 
 import uuid
-from db import SessionLocal
-from models import Usuario,Denuncia,Imagem,Post
-from utils.functions import salvar_imagem,gerar_hash,verificar_senha
+from .db import SessionLocal
+from .models import Usuario,Denuncia,Imagem,Post
+from .utils.functions import salvar_imagem,gerar_hash,verificar_senha
 
 from sqlalchemy.orm import Session
 

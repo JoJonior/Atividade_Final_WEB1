@@ -1,19 +1,19 @@
 from datetime import date
 import uuid
 from fastapi import FastAPI, File, Form, Request, UploadFile
-from fastapi.templating import Jinja2Templates
+from fastapi.templating import Jinja2Templates  
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi import Depends
-from models import Denuncia
-from db import Base, engine,SessionLocal,get_db
+from .models import Denuncia
+from .db import Base, engine,SessionLocal,get_db
 from sqlalchemy.orm import Session
-import models
+from . import models
 from starlette.middleware.sessions import SessionMiddleware
 
 
-from crud import criar_denuncia, criar_post, criar_usuario, editar_post, excluir_denuncia, excluir_post, get_denuncias, autenticar_usuario, get_posts
+from .crud import criar_denuncia, criar_post, criar_usuario, editar_post, excluir_denuncia, excluir_post, get_denuncias, autenticar_usuario, get_posts
 
 import uvicorn
 

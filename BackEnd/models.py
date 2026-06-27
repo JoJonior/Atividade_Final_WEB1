@@ -2,7 +2,7 @@ import uuid
 from sqlalchemy import Column, Integer, String,UUID,DateTime,ForeignKey
 from sqlalchemy.orm import relationship
 
-from db import Base, engine,SessionLocal
+from .db import Base, engine,SessionLocal
 
 
 # modelo (tabela)
