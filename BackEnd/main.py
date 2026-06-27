@@ -259,7 +259,8 @@ def usuario_logado(request: Request):
     return user_id
 
 if __name__ == "__main__":
-    
-    #uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    # TESTE LOCAL
+
+    # CMD: uvicorn BackEnd.main:app --host 127.0.0.1 --port 8000 --reload
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
     
