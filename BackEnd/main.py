@@ -189,7 +189,7 @@ def admin_login(
     request.session["user_id"] = str(usuario.id)
     return RedirectResponse("/ADMIN/denuncias", status_code=303)
 
-@app.get("/logout")
+@app.get("/loggout")
 def logout(request: Request):
     request.session.clear()
     return RedirectResponse("/ADMIN/login", status_code=303)
