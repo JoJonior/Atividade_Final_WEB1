@@ -9,7 +9,7 @@ from fastapi import Depends
 from models import Denuncia
 from db import Base, engine,SessionLocal,get_db
 from sqlalchemy.orm import Session
-
+import models
 from starlette.middleware.sessions import SessionMiddleware
 
 
